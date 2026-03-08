@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ludo Master</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-bg"></div>
+
+    <!-- LOADING SCREEN -->
+    <div id="loading-screen" class="screen active">
+        <div class="logo-container pulse">
+            <h1 class="logo-title">LUDO<span>STAR</span></h1>
+            <div class="logo-dice">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+        </div>
+        <div class="loader-bar">
+            <div class="loader-fill"></div>
+        </div>
+        <div class="loading-text">Loading Assets...</div>
+    </div>
+
+    <!-- HOME MENU SCREEN -->
+    <div id="home-screen" class="screen">
+        <div class="logo-container small">
+            <h1 class="logo-title">LUDO<span>STAR</span></h1>
+        </div>
+
+        <div class="menu-container">
+            <button class="menu-btn btn-vs-comp" onclick="openPlayerSelect('computer')">
+                <span class="icon">🤖</span> PLAY VS COMPUTER
+            </button>
+            <button class="menu-btn btn-pass-play" onclick="openPlayerSelect('passplay')">
+                <span class="icon">👥</span> PASS N PLAY
+            </button>
+            <button class="menu-btn btn-snakes" onclick="window.location.href='snakes.html'">
+                <span class="icon">🐍</span> SAANP SEEDI (Lvl 8)
+            </button>
+        </div>
+
+        <!-- Player Select Modal -->
+        <div id="player-modal" class="modal">
+            <div class="modal-content">
+                <h2>Select Players</h2>
+                <div class="player-count-options">
+                    <button class="count-btn" onclick="startGame(2)">2</button>
+                    <button class="count-btn" onclick="startGame(3)">3</button>
+                    <button class="count-btn" onclick="startGame(4)">4</button>
+                </div>
+                <button class="btn-close" onclick="closePlayerSelect()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GAME APP CONTAINER -->
+    <div id="game-screen" class="screen app-container">
+
+        <!-- Top Players Row -->
+        <div class="players-row">
+            <div class="player-panel blue-panel" id="panel-1">
+                <div class="avatar-header" id="name-1">Player 2</div>
+                <div class="player-content">
+                    <div class="avatar-icon"><img id="avatar-img-1"
+                            src="https://api.dicebear.com/7.x/bottts/svg?seed=P2&backgroundColor=1E88E5" /></div>
+                    <div class="dice-slot" id="dice-slot-1"></div>
+                </div>
+            </div>
+            <div class="player-panel red-panel" id="panel-2">
+                <div class="avatar-header" id="name-2">Player 3</div>
+                <div class="player-content">
+                    <div class="dice-slot" id="dice-slot-2"></div>
+                    <div class="avatar-icon"><img id="avatar-img-2"
+                            src="https://api.dicebear.com/7.x/bottts/svg?seed=P3&backgroundColor=E53935" /></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Board Area -->
+        <div class="board-container">
+            <div class="ludo-wrapper">
+                <div class="ludo-board" id="board">
+                    <!-- JS generated cells -->
+                </div>
+                <!-- Center Triangles Layer -->
+                <svg class="board-overlay" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg"
+                    preserveAspectRatio="none">
+                    <polygon points="6,6 6,9 7.5,7.5" fill="#1E88E5" /> <!-- Left Blue -->
+                    <polygon points="6,6 9,6 7.5,7.5" fill="#E53935" /> <!-- Top Red -->
+                    <polygon points="9,6 9,9 7.5,7.5" fill="#4CAF50" /> <!-- Right Green -->
+                    <polygon points="6,9 9,9 7.5,7.5" fill="#FBC02D" /> <!-- Bottom Yellow -->
+                </svg>
+            </div>
+        </div>
+
+        <!-- Bottom Players Row -->
+        <div class="players-row">
+            <div class="player-panel yellow-panel active" id="panel-0">
+                <div class="avatar-header" id="name-0">You</div>
+                <div class="player-content">
+                    <div class="avatar-icon"><img id="avatar-img-0"
+                            src="https://api.dicebear.com/7.x/avataaars/svg?seed=You&backgroundColor=FBC02D" /></div>
+                    <div class="dice-slot" id="dice-slot-0">
+                        <!-- Dice sits here initially -->
+                        <div class="dice-wrapper" id="dice-wrapper">
+                            <div class="dice" id="dice">
+                                <div class="face front"><span class="dot"></span></div>
+                                <div class="face back">
+                                    <span class="dot"></span><span class="dot"></span>
+                                    <span class="dot"></span><span class="dot"></span>
+                                    <span class="dot"></span><span class="dot"></span>
+                                </div>
+                                <div class="face right">
+                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                </div>
+                                <div class="face left">
+                                    <span class="dot"></span><span class="dot"></span>
+                                    <span class="dot"></span><span class="dot"></span>
+                                </div>
+                                <div class="face top">
+                                    <span class="dot"></span><span class="dot"></span>
+                                </div>
+                                <div class="face bottom">
+                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                    <span class="dot"></span><span class="dot"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="player-panel green-panel" id="panel-3">
+                <div class="avatar-header" id="name-3">Player 4</div>
+                <div class="player-content">
+                    <div class="dice-slot" id="dice-slot-3"></div>
+                    <div class="avatar-icon"><img id="avatar-img-3"
+                            src="https://api.dicebear.com/7.x/bottts/svg?seed=P4&backgroundColor=4CAF50" /></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action bar -->
+        <div style="text-align:center; margin-top: 10px;">
+            <button class="btn-close" style="font-size: 0.8em; padding: 5px 15px;" onclick="location.reload()">Quit
+                UI</button>
+        </div>
+
+    </div>
+
+    <!-- Win Screen Modal -->
+    <div id="win-screen" class="screen modal" style="background: rgba(0,0,0,0.9)">
+        <div class="modal-content" style="background: transparent; box-shadow: none;">
+            <h1 style="color: gold; text-shadow: 0 4px 10px rgba(255,215,0,0.5); font-size: 3rem; margin-bottom: 2rem;"
+                id="win-title">WON!</h1>
+            <div class="avatar-icon" style="width: 100px; height: 100px; margin: 0 auto; margin-bottom: 2rem;"><img
+                    id="win-avatar" src="" /></div>
+            <button class="menu-btn btn-vs-comp" onclick="location.reload()">MAIN MENU</button>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">Welcome to Ludo! Tap your dice to start.</div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
